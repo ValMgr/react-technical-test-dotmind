@@ -35,7 +35,7 @@ function App() {
   const handleSearch = (search) => {
     setSearch(search);
     const filterContacts = contacts.filter((contact) => {
-      return contact.first_name.toLowerCase().includes(search.toLowerCase());
+      return contact.first_name.toLowerCase().includes(search.toLowerCase()) || contact.last_name.toLowerCase().includes(search.toLowerCase()) || contact.email.toLowerCase().includes(search.toLowerCase());
     }
     );
     setFilterContacts(filterContacts);
