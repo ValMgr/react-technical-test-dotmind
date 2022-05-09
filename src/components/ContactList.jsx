@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import Contact from "./Contact";
 
 function ContactList(props) {
     const { contacts, handleFav, handleUnfav } = props;
-    
+
 
     return (
         <ul className="contact-list">

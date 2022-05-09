@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import heart from "../assets/svg/heart.svg";
 import heartFill from "../assets/svg/heart-fill.svg";

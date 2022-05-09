@@ -30,7 +30,6 @@ function App() {
       setFilterContacts([...contacts, ...data.data]);
     };
     fetchData();
-
   };
 
   const handleSearch = (search) => {
