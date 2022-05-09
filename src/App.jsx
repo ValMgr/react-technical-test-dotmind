@@ -64,10 +64,10 @@ function App() {
       <div className="App container">
         <h1>My contacts</h1>
         <div className="row">
-          <div className="col">
-            <div className="d-flex">
+          <div className="col d-flex flex-column">
+            <div className="d-flex align-items-center mb-4">
               <SearchBar search={search} handleSearch={handleSearch} />
-              <p className="mx-2">Total : {filterContacts.length} </p>
+              <p className="mx-2 my-0">Total : {filterContacts.length} </p>
             </div>
             <ContactList contacts={filterContacts} handleFav={handleFav} handleUnfav={handleUnfav} />
             <div className="text-center">

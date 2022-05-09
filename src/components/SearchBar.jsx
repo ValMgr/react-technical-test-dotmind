@@ -11,7 +11,7 @@ function SearchBar(props) {
 
     return (
         <div className="search-bar">
-            <input type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <input className="form-control" type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
     )
 
