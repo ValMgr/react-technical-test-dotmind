@@ -4,12 +4,20 @@ import "./App.css";
 import SearchBar from "./components/SearchBar";
 import ContactList from "./components/ContactList";
 
-
 function App() {
   const [contacts, setContacts] = useState([]);
   const [favContacts, setFavContacts] = useState([]);
   const [search, setSearch] = useState("");
   const [filterContacts, setFilterContacts] = useState([]);
+
+  useEffect(() => {
+    const favContacts = JSON.parse(localStorage.getItem("favContacts"));
+    if (favContacts) setFavContacts(favContacts);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favContacts", JSON.stringify(favContacts));
+  }, [favContacts]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +28,7 @@ function App() {
     };
     fetchData();
   }, []);
+
 
   const searchMore = (e) => {
     e.preventDefault();
@@ -35,27 +44,27 @@ function App() {
   const handleSearch = (search) => {
     setSearch(search);
     const filterContacts = contacts.filter((contact) => {
-      return contact.first_name.toLowerCase().includes(search.toLowerCase()) || contact.last_name.toLowerCase().includes(search.toLowerCase()) || contact.email.toLowerCase().includes(search.toLowerCase());
-    }
-    );
+      return (
+        contact.first_name.toLowerCase().includes(search.toLowerCase()) ||
+        contact.last_name.toLowerCase().includes(search.toLowerCase()) ||
+        contact.email.toLowerCase().includes(search.toLowerCase())
+      );
+    });
     setFilterContacts(filterContacts);
-  }
-
+  };
 
   const handleFav = (contact) => {
-    const newFavContacts = [...favContacts, contact];
     contact.isFav = true;
+    const newFavContacts = [...favContacts, contact];
     setFavContacts(newFavContacts);
-    localStorage.setItem("favContacts", JSON.stringify(favContacts));
-  }
+  };
 
   const handleUnfav = (contact) => {
-    const unfavContacts = favContacts.filter(
-      (favContact) => favContact.id !== contact.id
-    );
-    setFavContacts(unfavContacts);
     contact.isFav = false;
-    localStorage.setItem("favContacts", JSON.stringify(unfavContacts));
+    const newFavContacts = favContacts.filter((favContact) => {
+      return favContact.id !== contact.id;
+    });
+    setFavContacts(newFavContacts);
   };
 
   return (
@@ -69,7 +78,11 @@ function App() {
               <SearchBar search={search} handleSearch={handleSearch} />
               <p className="mx-2 my-0">Total : {filterContacts.length} </p>
             </div>
-            <ContactList contacts={filterContacts} handleFav={handleFav} handleUnfav={handleUnfav} />
+            <ContactList
+              contacts={filterContacts}
+              handleFav={handleFav}
+              handleUnfav={handleUnfav}
+            />
             <div className="text-center">
               {contacts.length > 0 && contacts.length <= 6 && (
                 <button onClick={searchMore} className="btn btn-primary">
@@ -81,7 +94,11 @@ function App() {
 
           <div className="col">
             <h2>Favorites</h2>
-            <ContactList contacts={favContacts} handleFav={handleFav} handleUnfav={handleUnfav} />
+            <ContactList
+              contacts={favContacts}
+              handleFav={handleFav}
+              handleUnfav={handleUnfav}
+            />
           </div>
         </div>
       </div>
